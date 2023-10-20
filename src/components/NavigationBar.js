@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Dashboard', 'Contact'];
@@ -30,9 +31,11 @@ export default function NavigationBar(props) {
           <List>
             {navItems.map((item) => (
               <ListItem key={item} disablePadding>
-                <ListItemButton sx={{ textAlign: 'center' }}>
+               
+                <ListItemButton href="#simple-list" sx={{ textAlign: 'center' }}>
                   <ListItemText primary={item} />
                 </ListItemButton>
+               
               </ListItem>
             ))}
           </List>
@@ -64,7 +67,7 @@ export default function NavigationBar(props) {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
+              <Button href={item=='Home'?'/' :item} key={item} sx={{ color: '#fff' }}>
                 {item}
               </Button>
             ))}
