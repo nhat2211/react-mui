@@ -1,4 +1,4 @@
-import { Paper, TableContainer } from "@mui/material";
+import { CardMedia, Paper, TableContainer } from "@mui/material";
 import React from "react"
 import { useEffect, useState } from "react"
 import {Table, TableHead,TableRow,TableCell, TableBody} from "@mui/material";
@@ -7,6 +7,11 @@ import Icon from "@mui/material/Icon";
 import { green } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import IconButton from '@mui/material/IconButton';
+import {Card, CardContent} from "@mui/material";
+import CardActions from "@mui/material/CardActions";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 
 
 export default function Home() {
@@ -31,59 +36,43 @@ export default function Home() {
     return(
 
         <div>
+
+          
             <h1 className="font-pages">Home</h1>
 
-            <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-          <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell align="left">Created At</TableCell>
-            <TableCell align="left">Avatar</TableCell>
-            <TableCell align="left">Age</TableCell>
-            <TableCell align="left">Address</TableCell>
-            <TableCell align="left">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {APIData.map((staff) => (
-            <TableRow
-              key={staff.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-                 <TableCell component="th" scope="row">
-                {staff.id}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <a href="detail">{staff.name}</a>
-              </TableCell>
-              <TableCell align="left">{staff.createdAt}</TableCell>
-              <TableCell align="right">
-            
-                <Avatar align="left" alt="Remy Sharp" src={staff.avatar} />
-                
-                </TableCell>
-              <TableCell align="left">{staff.age}</TableCell>
-              <TableCell align="left">{staff.address}</TableCell>
-              <TableCell align="left">
-              <Stack direction="row" spacing={3}>
-              <IconButton sx={{ color: green[500] }}>
-                <Icon>
-                info
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            {APIData.map((staff) => (
+              <Grid item xs={3}>
+  <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        sx={{ height: 240 }}
+        image={staff.avatar}
+        title="green iguana"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          <a href={`detail/${staff.id}`}>{staff.name}</a>
+        </Typography>
+        <Typography gutterBottom variant="h5" component="div">
+          {staff.address}
+        </Typography>
+        <Typography gutterBottom variant="h5" component="div">
+          {staff.age}
+        </Typography>
+       
+      </CardContent>
+      <CardActions>
+        <Button href={`detail/${staff.id}`} size="small">Detail</Button>
+      </CardActions>
+    </Card>
+  </Grid>
 
-                </Icon>
-                
-                </IconButton>
-      
-              </Stack>
-                
-                </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+
+            ))}
+            
+            </Grid>
+
+           
             
         </div>
     )
