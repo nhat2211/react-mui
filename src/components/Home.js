@@ -6,6 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Icon from "@mui/material/Icon";
 import { green } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
+import IconButton from '@mui/material/IconButton';
 
 
 export default function Home() {
@@ -67,7 +68,13 @@ export default function Home() {
               <TableCell align="left">{staff.address}</TableCell>
               <TableCell align="left">
               <Stack direction="row" spacing={3}>
-              <Icon sx={{ color: green[500] }}>info</Icon>
+              <IconButton sx={{ color: green[500] }}>
+                <Icon>
+                info
+
+                </Icon>
+                
+                </IconButton>
       
               </Stack>
                 

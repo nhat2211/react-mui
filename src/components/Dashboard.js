@@ -1,6 +1,6 @@
 import React from "react"
 import { useEffect, useState } from "react"
-import {Table, TableHead,TableRow,TableCell, TableBody} from "@mui/material";
+import {Table, TableHead,TableRow,TableCell, TableBody, IconButton} from "@mui/material";
 import Avatar from '@mui/material/Avatar';
 import Icon from "@mui/material/Icon";
 import { green } from "@mui/material/colors";
@@ -66,9 +66,9 @@ export default function Dashboard() {
               <TableCell align="left">{staff.address}</TableCell>
               <TableCell align="left">
               <Stack direction="row" spacing={3}>
-              <Icon sx={{ color: green[500] }}>add_circle</Icon>
-              <Icon sx={{ color: green[500] }}>update_circle</Icon>
-              <Icon sx={{ color: green[500] }}>delete_circle</Icon>
+              <IconButton><Icon sx={{ color: green[500] }}>add_circle</Icon></IconButton>
+              <IconButton><Icon sx={{ color: green[500] }}>update_circle</Icon></IconButton>
+              <IconButton><Icon sx={{ color: green[500] }}>delete_circle</Icon></IconButton>
 
 
               </Stack>
