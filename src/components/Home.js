@@ -7,13 +7,6 @@ import Icon from "@mui/material/Icon";
 import { green } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 
-function createData(id, createdAt, name, avatar, age, address) {
-    return { id, createdAt, name, avatar, age, address };
-  }
-
-  const rows = [
-    
-  ];
 
 export default function Home() {
 
@@ -62,7 +55,7 @@ export default function Home() {
                 {staff.id}
               </TableCell>
               <TableCell component="th" scope="row">
-                {staff.name}
+                <a href="detail">{staff.name}</a>
               </TableCell>
               <TableCell align="left">{staff.createdAt}</TableCell>
               <TableCell align="right">
@@ -74,11 +67,8 @@ export default function Home() {
               <TableCell align="left">{staff.address}</TableCell>
               <TableCell align="left">
               <Stack direction="row" spacing={3}>
-              <Icon sx={{ color: green[500] }}>add_circle</Icon>
-              <Icon sx={{ color: green[500] }}>update_circle</Icon>
-              <Icon sx={{ color: green[500] }}>delete_circle</Icon>
-
-
+              <Icon sx={{ color: green[500] }}>info</Icon>
+      
               </Stack>
                 
                 </TableCell>
