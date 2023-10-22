@@ -1,5 +1,13 @@
+.parent {
+  width: 100%;
+  text-align: center;
+}
 
-
+.child {
+  display: inline-block;  
+  margin: 2px;
+  width: 500px;
+}
 .font-pages {
   font-size: 100px;
 }

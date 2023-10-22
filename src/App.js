@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Contact from './components/Contact';
 import { Route} from 'react-router-dom';
 import Dashboard from './components/Dashboard';
+import Detail from './components/Detail';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
   <Route  path='/dashboard' element={<Dashboard /> }></Route>
 
   <Route  path='/contact' element={<Contact/> }></Route>
+
+  <Route  path='/detail/:id' element={<Detail/> }></Route>
 
 
 </Routes>
