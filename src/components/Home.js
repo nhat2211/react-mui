@@ -28,7 +28,7 @@ export default function Home() {
                 }
                 return response.json();
             })
-            .then(data=>{setAPIData(data)})
+            .then(data=>{setAPIData(data.sort((a,b)=>{return a.age - b.age}))})
             .catch(error=>console.log(error.message));
         
     },[])
