@@ -66,7 +66,7 @@ export default function Dashboard() {
               <TableCell align="left">{staff.address}</TableCell>
               <TableCell align="left">
               <Stack direction="row" spacing={3}>
-              <IconButton><Icon sx={{ color: green[500] }}>add_circle</Icon></IconButton>
+              <IconButton href="/addNewStaff"><Icon sx={{ color: green[500] }}>add_circle</Icon></IconButton>
               <IconButton><Icon sx={{ color: green[500] }}>update_circle</Icon></IconButton>
               <IconButton><Icon sx={{ color: green[500] }}>delete_circle</Icon></IconButton>
 

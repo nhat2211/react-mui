@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import { Route} from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Detail from './components/Detail';
+import AddStaff from './components/AddStaff';
 
 function App() {
   return (
@@ -24,7 +25,9 @@ function App() {
 
   <Route  path='/contact' element={<Contact/> }></Route>
 
-  <Route  path='/detail/:id' element={<Detail/> }></Route>
+  <Route  path='/detail/:id' element={<Detail/> }></Route> 
+
+  <Route  path='/addNewStaff' element={<AddStaff/> }></Route>
 
 
 </Routes>

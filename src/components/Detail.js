@@ -25,7 +25,7 @@ export default function Detail() {
             .then(data=>{setAPIData(data)})
             .catch(error=>console.log(error.message));
         
-    },[])
+    },[getStaffsUrl])
 
 
 
