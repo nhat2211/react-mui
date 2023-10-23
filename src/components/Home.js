@@ -12,6 +12,7 @@ import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
+import { Link } from "react-router-dom";
 
 
 export default function Home() {
@@ -27,7 +28,7 @@ export default function Home() {
                 }
                 return response.json();
             })
-            .then(data=>{setAPIData(data.sort((a,b)=>{return a.age - b.age}))})
+            .then(data=>{setAPIData(data.sort((a,b)=>{return b.age - a.age}))})
             .catch(error=>console.log(error.message));
         
     },[])
@@ -51,7 +52,10 @@ export default function Home() {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          <a href={`detail/${staff.id}`}>{staff.name}</a>
+          <Link to={`detail/${staff.id}`}>
+          <a>{staff.name}</a>
+          </Link>
+         
         </Typography>
         <Typography gutterBottom variant="h5" component="div">
           {staff.address}
@@ -62,7 +66,10 @@ export default function Home() {
        
       </CardContent>
       <CardActions>
-        <Button href={`detail/${staff.id}`} size="small">Detail</Button>
+        <Link to= {`detail/${staff.id}`}>
+        <Button size="small">Detail</Button>
+        </Link>
+       
       </CardActions>
     </Card>
   </Grid>
