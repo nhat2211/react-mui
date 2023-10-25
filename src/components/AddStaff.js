@@ -13,8 +13,12 @@ import Typography from "@mui/material/Typography";
 
 export default function AddStaff() {
 
-    const[APIData, setAPIData] = useState([]);
+    const [open, setOpen] = useState(false);
+    const handleClose = () => {
+   setOpen(false);
+      };
     const getStaffsUrl = 'https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs';
+    const currDate = new Date();
 
     const formik = useFormik({
         initialValues:{
@@ -26,15 +30,19 @@ export default function AddStaff() {
     },
     onSubmit: (values)=>{
         alert(JSON.stringify(formik.values));
-        // fetch(getStaffsUrl, {method:'POST'}).then(
-        //     response => {
-        //         if(!response.ok) {
-        //             throw new Error(`HTTP status: ${response.status}`);
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data=>{setAPIData(data.sort((a,b)=>{return b.age - a.age}))})
-        //     .catch(error=>console.log(error.message));
+        fetch(getStaffsUrl, {method:'POST',
+        body:JSON.stringify(values), header:{
+            'Content-Type':'application/json'
+        },credentials:'same-origin'})
+        .then(
+            response => {
+                if(!response.ok) {
+                    throw new Error(`HTTP status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data=> setOpen(true))
+            .catch(error=>console.log(error.message));
         
     },
     validationSchema: Yup.object({
@@ -47,18 +55,18 @@ export default function AddStaff() {
     
    });
 
-    const createNewStaff = () => {
-        fetch(getStaffsUrl, {method:'POST'}).then(
-            response => {
-                if(!response.ok) {
-                    throw new Error(`HTTP status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data=>{setAPIData(data.sort((a,b)=>{return b.age - a.age}))})
-            .catch(error=>console.log(error.message));
+    // const createNewStaff = () => {
+    //     fetch(getStaffsUrl, {method:'POST'}).then(
+    //         response => {
+    //             if(!response.ok) {
+    //                 throw new Error(`HTTP status: ${response.status}`);
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data=>{setAPIData(data.sort((a,b)=>{return b.age - a.age}))})
+    //         .catch(error=>console.log(error.message));
         
-    }
+    // }
     
 
 
@@ -99,15 +107,15 @@ export default function AddStaff() {
             />
             {formik.errors.avatar && (<Typography variant="caption" color="red">{formik.errors.avatar}</Typography>)}
 
-
-<LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DatePicker']}>
-        <DatePicker label="CreatedAt" />
-      </DemoContainer>
-    </LocalizationProvider>
-    {formik.errors.createdAt && (<Typography variant="caption" color="red">{formik.errors.createdAt}</Typography>)}
+            <TextField
+              label="createdAt"
+              name="createdAt"
+              disabled
+              value={currDate}
+              onChange={formik.handleChange}
+            />
          
-            <Button onClick={createNewStaff()} variant="contained"
+            <Button  variant="contained"
             type='submit'>
              Save
             </Button>
@@ -116,6 +124,30 @@ export default function AddStaff() {
 </Stack>
 	
 </form>
+
+{/* <Dialog
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">
+      {"Congraturation"}
+    </DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">
+      <Alert severity="success">
+  <AlertTitle>Adding successful!</AlertTitle>
+</Alert>
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button><Link to='/dashboard' style={{textDecoration:"none"}}>Dashboard</Link></Button>
+      <Button autoFocus onClick={handleClose}>
+       Close
+      </Button>
+    </DialogActions>
+  </Dialog> */}
 
 
         </div>
