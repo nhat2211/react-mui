@@ -56,20 +56,6 @@ export default function AddStaff() {
     
    });
 
-    // const createNewStaff = () => {
-    //     fetch(getStaffsUrl, {method:'POST'}).then(
-    //         response => {
-    //             if(!response.ok) {
-    //                 throw new Error(`HTTP status: ${response.status}`);
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data=>{setAPIData(data.sort((a,b)=>{return b.age - a.age}))})
-    //         .catch(error=>console.log(error.message));
-        
-    // }
-    
-
 
     return(
         <div>
