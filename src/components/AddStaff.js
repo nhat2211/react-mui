@@ -14,6 +14,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import DialogActions from "@mui/material/DialogActions";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function AddStaff() {
 
@@ -21,7 +22,7 @@ export default function AddStaff() {
     const handleClose = () => {
    setOpen(false);
       };
-    const getStaffsUrl = 'https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs';
+    const postStaffUrl = 'https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs';
     const currDate = new Date();
 
     const formik = useFormik({
@@ -35,18 +36,10 @@ export default function AddStaff() {
 
     onSubmit: (values) => {
         values.createdAt = new Date(values.createdAt);
-        alert( values.createdAt);
-        alert(JSON.stringify(values));
-        fetch(getStaffsUrl, {method:'POST',
-        body:JSON.stringify(values), header:{
-            'Content-Type':'application/json'
-        },credentials:'same-origin'})
+        axios.post(postStaffUrl, values)
         .then(
             response => {
-                if(!response.ok) {
-                    throw new Error(`HTTP status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .then(data=> setOpen(true))
             .catch(error=>console.log(error.message));

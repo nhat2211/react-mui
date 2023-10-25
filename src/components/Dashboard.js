@@ -6,6 +6,7 @@ import Icon from "@mui/material/Icon";
 import { green } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import { Paper, TableContainer } from "@mui/material";
+import axios from "axios";
 
 export default function Dashboard() {
 
@@ -13,17 +14,14 @@ export default function Dashboard() {
     const getStaffsUrl = 'https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs';
 
     useEffect(() => {
-        fetch(getStaffsUrl).then(
-            response => {
-                if(!response.ok) {
-                    throw new Error(`HTTP status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data=>{setAPIData(data.sort((a,b)=>{return a.age - b.age}))})
-            .catch(error=>console.log(error.message));
-        
-    },[])
+      axios.get(getStaffsUrl).then(
+          response => {
+              return response.data;
+          })
+          .then(data=>{setAPIData(data.sort((a,b)=>{return b.age - a.age}))})
+          .catch(error=>console.log(error.message));
+      
+  },[])
 
 
     return(

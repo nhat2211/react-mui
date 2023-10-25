@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 
 export default function Home() {
@@ -20,19 +21,16 @@ export default function Home() {
     const[APIData, setAPIData] = useState([]);
     const getStaffsUrl = 'https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs';
 
-    useEffect(() => {
-        fetch(getStaffsUrl).then(
-            response => {
-                if(!response.ok) {
-                    throw new Error(`HTTP status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data=>{setAPIData(data.sort((a,b)=>{return b.age - a.age}))})
-            .catch(error=>console.log(error.message));
-        
-    },[])
 
+    useEffect(() => {
+      axios.get(getStaffsUrl).then(
+          response => {
+              return response.data;
+          })
+          .then(data=>{setAPIData(data.sort((a,b)=>{return b.age - a.age}))})
+          .catch(error=>console.log(error.message));
+      
+  },[])
 
     return(
 
