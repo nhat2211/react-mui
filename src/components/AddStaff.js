@@ -3,13 +3,17 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import {TextField,Button} from "@mui/material";
 import * as React from 'react';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import DialogActions from "@mui/material/DialogActions";
+import { Link } from "react-router-dom";
 
 export default function AddStaff() {
 
@@ -26,10 +30,13 @@ export default function AddStaff() {
             address:"",
             age:"",
             avatar:"",
-            createdAt:"",
+            createdAt:currDate,
     },
-    onSubmit: (values)=>{
-        alert(JSON.stringify(formik.values));
+
+    onSubmit: (values) => {
+        values.createdAt = new Date(values.createdAt);
+        alert( values.createdAt);
+        alert(JSON.stringify(values));
         fetch(getStaffsUrl, {method:'POST',
         body:JSON.stringify(values), header:{
             'Content-Type':'application/json'
@@ -45,6 +52,7 @@ export default function AddStaff() {
             .catch(error=>console.log(error.message));
         
     },
+    
     validationSchema: Yup.object({
         name: Yup.string().required("Required.").min(3, "Must be more 2 characters"),
         address: Yup.string().required("Required.").typeError("Please enter a address"),
@@ -73,8 +81,6 @@ export default function AddStaff() {
     return(
         <div>
             <h1 className="font-pages">Add new staff</h1>
-           
-
             <form onSubmit={formik.handleSubmit}>
             <Stack spacing={2}>
             <TextField
@@ -111,21 +117,23 @@ export default function AddStaff() {
               label="createdAt"
               name="createdAt"
               disabled
-              value={currDate}
+              value={formik.values.createdAt}
               onChange={formik.handleChange}
             />
          
-            <Button  variant="contained"
-            type='submit'>
-             Save
-            </Button>
+           
 
 
 </Stack>
+
+<Button  variant="contained" size="small"
+            type='submit'>
+             Save
+            </Button>
 	
 </form>
 
-{/* <Dialog
+<Dialog
     open={open}
     onClose={handleClose}
     aria-labelledby="alert-dialog-title"
@@ -147,7 +155,7 @@ export default function AddStaff() {
        Close
       </Button>
     </DialogActions>
-  </Dialog> */}
+  </Dialog>
 
 
         </div>
