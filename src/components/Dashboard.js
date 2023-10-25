@@ -113,8 +113,11 @@ export default function Dashboard() {
                     <Link to="/addNewStaff">
                       <IconButton><Icon sx={{ color: green[500] }}>add_circle</Icon></IconButton>
                     </Link>
-
-                    <IconButton><Icon sx={{ color: green[500] }}>update_circle</Icon></IconButton>
+                     
+                     <Link to= {`/updateStaff/${staff.id}`}>
+                     <IconButton><Icon sx={{ color: green[500] }}>update_circle</Icon></IconButton>
+                     </Link>
+                  
                     <IconButton onClick={(e) => {showConfirmDeleteDialog(staff.id)}}><Icon sx={{ color: green[500] }}>delete_circle</Icon></IconButton>
 
 
