@@ -40,6 +40,7 @@ export default function Dashboard() {
   };
 
   const deleteStaff = () => {
+    setOpen(false);
     axios.delete(deleteStaffsUrl+`/${idDelete}`)
       .then(
         response => {
@@ -162,7 +163,7 @@ export default function Dashboard() {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <Alert severity="success">
-              <AlertTitle>Delete Staff Successfully ?</AlertTitle>
+              <AlertTitle>Delete Staff Successfully</AlertTitle>
             </Alert>
           </DialogContentText>
         </DialogContent>
