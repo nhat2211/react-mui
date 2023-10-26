@@ -1,7 +1,7 @@
 
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-import {TextField,Button} from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import * as React from 'react';
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
@@ -15,130 +15,150 @@ import AlertTitle from "@mui/material/AlertTitle";
 import DialogActions from "@mui/material/DialogActions";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 export default function UpdateStaff() {
+    const staff = useParams();
 
     const [open, setOpen] = useState(false);
+
+    const [APIData, setAPIData] = useState([]);
+    const getStaffsUrl = `https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs/${staff.id}`;
+
+    useEffect(() => {
+        fetch(getStaffsUrl, { method: 'GET' }).then(
+            response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => { setAPIData(data) })
+            .catch(error => console.log(error.message));
+
+    }, [getStaffsUrl])
     const handleClose = () => {
-   setOpen(false);
-      };
+        setOpen(false);
+    };
     const putStaffUrl = 'https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs';
     const currDate = new Date();
 
     const formik = useFormik({
-        initialValues:{
-            name:"",
-            address:"",
-            age:"",
-            avatar:"",
-            createdAt:currDate,
-    },
+        initialValues: {
+            name: APIData.name,
+            address: APIData.address,
+            age: APIData.age,
+            avatar: APIData.avatar,
+            createdAt: currDate,
+        },
 
-    onSubmit: (values) => {
-        values.createdAt = new Date(values.createdAt);
-        axios.post(putStaffUrl, values)
-        .then(
-            response => {
-                return response.data;
-            })
-            .then(data=> setOpen(true))
-            .catch(error=>console.log(error.message));
-        
-    },
-    
-    validationSchema: Yup.object({
-        name: Yup.string().required("Required.").min(3, "Must be more 2 characters"),
-        address: Yup.string().required("Required.").typeError("Please enter a address"),
-        age: Yup.number().integer().required("Required.").typeError("Please enter a valid number"),
-        avatar: Yup.string().url().required("Required.").typeError("Please enter a valid url"),
-        createdAt: Yup.string().required("Required.").typeError("Please enter date")
-    }),
-    
-   });
+        onSubmit: (values) => {
+            values.createdAt = new Date(values.createdAt);
+            axios.post(putStaffUrl, values)
+                .then(
+                    response => {
+                        return response.data;
+                    })
+                .then(data => setOpen(true))
+                .catch(error => console.log(error.message));
 
-return(
-    <div>
-        <h1 className="font-pages">Update staff</h1>
+        },
 
-        <form onSubmit={formik.handleSubmit}>
-            <Stack spacing={2}>
-            <TextField
-               label="Name"
-              name="name"
-             value={formik.values.name}
-              onChange={formik.handleChange}
-            />
-            {formik.errors.name && (<Typography variant="caption" color="red">{formik.errors.name}</Typography>)}
-            <TextField
-	label="address"
-              name="address"
-              value={formik.values.address}
-              onChange={formik.handleChange}
-            />
-            {formik.errors.address && (<Typography variant="caption" color="red">{formik.errors.address}</Typography>)}
-             <TextField
-              label="age"
-              name="age"
-              value={formik.values.age}
-              onChange={formik.handleChange}
-            />
-             {formik.errors.age && (<Typography variant="caption" color="red">{formik.errors.age}</Typography>)}
+        validationSchema: Yup.object({
+            name: Yup.string().required("Required.").min(3, "Must be more 2 characters"),
+            address: Yup.string().required("Required.").typeError("Please enter a address"),
+            age: Yup.number().integer().required("Required.").typeError("Please enter a valid number"),
+            avatar: Yup.string().url().required("Required.").typeError("Please enter a valid url"),
+            createdAt: Yup.string().required("Required.").typeError("Please enter date")
+        }),
 
-<TextField
-              label="avatar"
-              name="avatar"
-              value={formik.values.avatar}
-              onChange={formik.handleChange}
-            />
-            {formik.errors.avatar && (<Typography variant="caption" color="red">{formik.errors.avatar}</Typography>)}
+    });
 
-            <TextField
-              label="createdAt"
-              name="createdAt"
-              disabled
-              value={formik.values.createdAt}
-              onChange={formik.handleChange}
-            />
-         
-           
+    return (
+        <div>
+            <h1 className="font-pages">Update staff</h1>
 
+            <form onSubmit={formik.handleSubmit}>
+                <Stack spacing={2}>
+                    <TextField
+                        label="Name"
+                        name="name"
+                        value={APIData.name}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.errors.name && (<Typography variant="caption" color="red">{formik.errors.name}</Typography>)}
+                    <TextField
+                        label="address"
+                        name="address"
+                        value={APIData.address}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.errors.address && (<Typography variant="caption" color="red">{formik.errors.address}</Typography>)}
+                    <TextField
+                        label="age"
+                        name="age"
+                        value={APIData.age}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.errors.age && (<Typography variant="caption" color="red">{formik.errors.age}</Typography>)}
 
-</Stack>
+                    <TextField
+                        label="avatar"
+                        name="avatar"
+                        value={APIData.avatar}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.errors.avatar && (<Typography variant="caption" color="red">{formik.errors.avatar}</Typography>)}
 
-<Button  variant="contained" size="small"
-            type='submit'>
-             Save
-            </Button>
-	
-</form>
-
-<Dialog
-    open={open}
-    onClose={handleClose}
-    aria-labelledby="alert-dialog-title"
-    aria-describedby="alert-dialog-description"
-  >
-    <DialogTitle id="alert-dialog-title">
-      {"Congraturation"}
-    </DialogTitle>
-    <DialogContent>
-      <DialogContentText id="alert-dialog-description">
-      <Alert severity="success">
-  <AlertTitle>Adding successful!</AlertTitle>
-</Alert>
-      </DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <Button><Link to='/dashboard' style={{textDecoration:"none"}}>Dashboard</Link></Button>
-      <Button autoFocus onClick={handleClose}>
-       Close
-      </Button>
-    </DialogActions>
-  </Dialog>
+                    <TextField
+                        label="createdAt"
+                        name="createdAt"
+                        disabled
+                        value={formik.values.createdAt}
+                        onChange={formik.handleChange}
+                    />
 
 
 
-    </div>
+
+                </Stack>
+
+                <Button variant="contained" size="small"
+                    type='submit'>
+                    Save
+                </Button>
+
+            </form>
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Congraturation"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <Alert severity="success">
+                            <AlertTitle>Adding successful!</AlertTitle>
+                        </Alert>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button><Link to='/dashboard' style={{ textDecoration: "none" }}>Dashboard</Link></Button>
+                    <Button autoFocus onClick={handleClose}>
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
 
-)
+
+        </div>
+
+
+    )
 }
