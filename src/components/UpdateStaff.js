@@ -27,12 +27,10 @@ export default function UpdateStaff() {
     const getStaffsUrl = `https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs/${staff.id}`;
 
     useEffect(() => {
-        fetch(getStaffsUrl, { method: 'GET' }).then(
+        axios.get(getStaffsUrl).then(
             response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP status: ${response.status}`);
-                }
-                return response.json();
+                
+                return response.data;
             })
             .then(data => { setAPIData(data) })
             .catch(error => console.log(error.message));
@@ -44,14 +42,17 @@ export default function UpdateStaff() {
     const putStaffUrl = 'https://6530c5486c756603295f0271.mockapi.io/api/v1/staffs';
     const currDate = new Date();
 
+    
+
     const formik = useFormik({
-        initialValues: {
-            name: APIData.name,
-            address: APIData.address,
-            age: APIData.age,
-            avatar: APIData.avatar,
-            createdAt: currDate,
-        },
+
+        enableReinitialize:true,
+        
+        initialValues: APIData,
+
+        
+
+        // values : {APIData},
 
         onSubmit: (values) => {
             values.createdAt = new Date(values.createdAt);
@@ -84,21 +85,21 @@ export default function UpdateStaff() {
                     <TextField
                         label="Name"
                         name="name"
-                        value={APIData.name}
+                        value={formik.values.name}
                         onChange={formik.handleChange}
                     />
                     {formik.errors.name && (<Typography variant="caption" color="red">{formik.errors.name}</Typography>)}
                     <TextField
                         label="address"
                         name="address"
-                        value={APIData.address}
+                        value={formik.values.address}
                         onChange={formik.handleChange}
                     />
                     {formik.errors.address && (<Typography variant="caption" color="red">{formik.errors.address}</Typography>)}
                     <TextField
                         label="age"
                         name="age"
-                        value={APIData.age}
+                        value={formik.values.age}
                         onChange={formik.handleChange}
                     />
                     {formik.errors.age && (<Typography variant="caption" color="red">{formik.errors.age}</Typography>)}
@@ -106,7 +107,7 @@ export default function UpdateStaff() {
                     <TextField
                         label="avatar"
                         name="avatar"
-                        value={APIData.avatar}
+                        value={formik.values.avatar}
                         onChange={formik.handleChange}
                     />
                     {formik.errors.avatar && (<Typography variant="caption" color="red">{formik.errors.avatar}</Typography>)}
